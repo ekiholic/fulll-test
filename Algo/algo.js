@@ -3,7 +3,7 @@ function checkRules(rules) {
         return false;
     }
     for (const [key, value] of Object.entries(rules)) {
-        if (Number(key) == NaN || typeof value !== "string") {
+        if (Number.isNaN(Number(key)) || typeof value !== "string") {
             return false
         }
     }

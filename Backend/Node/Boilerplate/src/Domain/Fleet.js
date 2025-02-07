@@ -10,24 +10,35 @@ class Fleet {
         this.vehicles = new Map();
     }
 
+    isVehicleRegistered(plateNumber) {
+        return this.vehicles.has(plateNumber)
+    }
+
     registerVehicle(vehicle) {
-        if (this.vehicles.has(vehicle.plateNumber)) {
-            throw new Error(`Vehicle ${vehicle.plateNumber} is already registered`);
+        if (this.isVehicleRegistered(vehicle.plateNumber)) {
+            throw new Error('Vehicle is already registered');
         }
         this.vehicles.set(vehicle.plateNumber, vehicle);
     }
 
     parkVehicle(plateNumber, location) {
-        if (!this.vehicles.has(vehicle.plateNumber)) {
-            throw new Error(`Vehicle ${vehicle.plateNumber} is not registered`);
+        if (!this.isVehicleRegistered(plateNumber)) {
+            throw new Error('Vehicle is not registered');
         }
 
         const vehicle = this.vehicles.get(plateNumber);
-
         if (vehicle.location && vehicle.location.sameLocation(location)) {
-            throw new Error(`Vehicle ${plateNumber} already parked there`);
+            throw new Error('Vehicle already parked at this location');
         }
-        vehicle.sameLocation(location);
+        vehicle.setLocation(location);
+    }
+
+    getVehicleLocation(plateNumber) {
+        if (!this.isVehicleRegistered(plateNumber)) {
+            throw new Error('Vehicle is not registered');
+        }
+
+        
     }
 }
 

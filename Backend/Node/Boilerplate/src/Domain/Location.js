@@ -12,3 +12,5 @@ class Location {
          return this.location.lat === location.lat && this.location.lng === location.lng && this.location.lat === location.lat;
     }
 }
+
+module.exports = Location;

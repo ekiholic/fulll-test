@@ -1,5 +1,5 @@
 class Vehicle {
-    constructor(plateNumber, type) {
+    constructor(plateNumber, type = "car") {
         if (plateNumber === "" || typeof plateNumber !== "string") {
             throw new Error("Plate number invalid")
         }

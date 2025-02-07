@@ -1,3 +1,4 @@
+// Checking if rules object has the correct format.
 function checkRules(rules) {
     if (typeof rules !== "object" || rules === null) {
         return false;
@@ -10,6 +11,7 @@ function checkRules(rules) {
     return true;
 }
 
+// Prints number from 1 to n with rules.
 function fizzbuzz(n, rules) {
     if (typeof n !== "number" || !checkRules(rules)) {
         console.error("Invalid type");
@@ -25,11 +27,3 @@ function fizzbuzz(n, rules) {
         console.log(output || i);
     }
 }
-
-// Usage example
-const rules = {
-    3 : "Fizz",
-    5 : "Buzz",
-}
-
-fizzbuzz(20, rules)

@@ -1,24 +1,38 @@
 const app = require('commander');
+const repository = require('../Infra/Repository');
 
 app
     .command("create <userId>")
     .description("Create a fleet for a user")
     .action((userId) => {
-        console.log("Create fleet for user");
+        try {
+            repository.createFleet(userId);
+        } catch (error) {
+            console.log(error.message)
+        }
     });
 
 app
     .command("register-vehicle <fleetId> <vehiclePlateNumber>")
     .description("Create a fleet for a user")
     .action((fleetId, vehiclePlateNumber) => {
-        console.log("Register vehicle");
+        try {
+            repository.registerVehicle(fleetId, vehiclePlateNumber);
+        } catch (error) {
+            console.log(error.message);
+        }
     });
 
 app
     .command("localize-vehicle <fleetId> <vehiclePlateNumber> <lat> <lng> [alt]")
     .description("Create a fleet for a user")
     .action((fleetId, vehiclePlateNumber, lat, lng, alt) => {
-        console.log("Localize vehicle");
+        alt = alt || 0;
+        try {
+            repository.localizeVehicle(fleetId, vehiclePlateNumber, lat, lng, alt);
+        } catch (error) {
+            console.log(error.message);
+        }
     });
 
 app.parse(process.argv);

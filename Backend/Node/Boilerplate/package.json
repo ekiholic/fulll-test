@@ -10,5 +10,11 @@
   },
   "scripts": {
     "test": "cucumber-js --profile default"
+  },
+  "bin": {
+    "fleet": "./fleet"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1"
   }
 }

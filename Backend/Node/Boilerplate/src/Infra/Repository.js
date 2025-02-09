@@ -1,5 +1,4 @@
 const Database = require('better-sqlite3');
-const { register } = require('module');
 
 const db = new Database('sqlite3.db');
 
@@ -20,39 +19,27 @@ db.exec(`
   `);
 
 // Verify that the fleet doesn't already exists
-function fleetExists(fleetId) {
-    const res = db.prepare(`SELECT COUNT(*) FROM fleets WHERE id = ?`).get(fleetId);
-    if (res['COUNT(*)'] > 0) {
-        return true;
-    } else {
-        return false;
-    }
+function isFleetExist(fleetId) {
+    const res = db.prepare(`SELECT * FROM fleets WHERE id = ?`).get(fleetId);
+    return res;
 }
 
 // Verify that the vehicle isn't already registered
 function isVehicleRegistered(fleetId, vehiclePlateNumber) {
-    const res = db.prepare(`SELECT COUNT(*) FROM vehicles WHERE plateNumber = ? and fleetId = ?`).get(vehiclePlateNumber, fleetId);
-    if (res['COUNT(*)'] > 0) {
-        return true;
-    } else {
-        return false;
-    }
+    const res = db.prepare(`SELECT * FROM vehicles WHERE plateNumber = ? and fleetId = ?`).get(vehiclePlateNumber, fleetId);
+    return res;
 }
 
 // Verify that the vehicle isn't localized to the same location
 function isSameLocation(vehiclePlateNumber, lat, lng, alt) {
     const res = db.prepare(`SELECT * FROM vehicles WHERE plateNumber = ?`).get(vehiclePlateNumber);
-    if (res.lat == lat && res.lng == lng && res.alt == alt) {
-        return true;
-    } else {
-        return false;
-    }
+    return res.lat == lat && res.lng == lng && res.alt == alt;
 }
 
 // Create fleet with userId
 function createFleet(userId) {
     const fleetId = `${userId}-fleet`;
-    if (fleetExists(fleetId)) {
+    if (isFleetExist(fleetId)) {
         throw new Error(`Fleet already created : ${fleetId}`);
     }
     db.prepare(`INSERT INTO fleets (id, userId) VALUES (?, ?)`).run(fleetId, userId);
@@ -61,7 +48,7 @@ function createFleet(userId) {
 
 // Register vehicle to a fleet
 function registerVehicle(fleetId, vehiclePlateNumber) {
-    if (!fleetExists(fleetId)) {
+    if (!isFleetExist(fleetId)) {
         throw new Error(`${fleetId} doesn't exist`)
     } else if (isVehicleRegistered(fleetId, vehiclePlateNumber)) {
         throw new Error(`Vehicle ${vehiclePlateNumber} already registered`);

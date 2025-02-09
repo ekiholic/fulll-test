@@ -27,7 +27,7 @@ class Fleet {
         }
 
         const vehicle = this.vehicles.get(plateNumber);
-        if (vehicle.location && vehicle.location.sameLocation(location)) {
+        if (vehicle.location && vehicle.location.isSameLocation(location)) {
             throw new Error('Vehicle already parked at this location');
         }
         vehicle.setLocation(location);

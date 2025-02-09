@@ -8,7 +8,7 @@ class Location {
         this.alt = alt;
     }
 
-    sameLocation(location) {
+    isSameLocation(location) {
          return this.location.lat === location.lat && this.location.lng === location.lng && this.location.lat === location.lat;
     }
 }

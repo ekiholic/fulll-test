@@ -1,6 +1,6 @@
 class Location {
     constructor(lat, lng, alt = 0) {
-        if (typeof lat !== "number" || typeof lng !== "number" || typeof alt !== "number") {
+        if (Number.isNaN(Number(lat)) || Number.isNaN(Number(lng)) || Number.isNaN(Number(alt))) {
             throw new Error("Location values invalid");
         }
         this.lat = lat;

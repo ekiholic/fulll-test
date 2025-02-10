@@ -2,16 +2,14 @@ const Vehicle = require('./Vehicle');
 const Location = require('./Location');
 
 class Fleet {
-    constructor() { // id, userId
-        /*
-        this.id = id;
+    constructor(userId) {
         this.userId = userId;
-        */
         this.vehicles = new Map();
+        this.id = `${userId}-fleet`;
     }
 
     isVehicleRegistered(plateNumber) {
-        return this.vehicles.has(plateNumber)
+        return this.vehicles.has(plateNumber);
     }
 
     registerVehicle(vehicle) {
@@ -37,8 +35,6 @@ class Fleet {
         if (!this.isVehicleRegistered(plateNumber)) {
             throw new Error('Vehicle is not registered');
         }
-
-        
     }
 }
 

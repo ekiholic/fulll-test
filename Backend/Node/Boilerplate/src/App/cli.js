@@ -1,14 +1,20 @@
-const app = require('commander');
+const { Command } = require('commander');
 const repository = require('../Infra/Repository');
+const Fleet = require('../Domain/Fleet');
+const Vehicle = require('../Domain/Vehicle');
+const Location = require('../Domain/Location');
+
+app = new Command()
 
 app
     .command("create <userId>")
     .description("Create a fleet for a user")
     .action((userId) => {
         try {
-            repository.createFleet(userId);
+            const fleet = new Fleet(userId);
+            repository.createFleet(fleet);
         } catch (error) {
-            console.log(error.message)
+            console.log(error.message);
         }
     });
 
@@ -17,7 +23,8 @@ app
     .description("Create a fleet for a user")
     .action((fleetId, vehiclePlateNumber) => {
         try {
-            repository.registerVehicle(fleetId, vehiclePlateNumber);
+            const vehicle = new Vehicle(vehiclePlateNumber);
+            repository.registerVehicle(fleetId, vehicle);
         } catch (error) {
             console.log(error.message);
         }
@@ -29,7 +36,8 @@ app
     .action((fleetId, vehiclePlateNumber, lat, lng, alt) => {
         alt = alt || 0;
         try {
-            repository.localizeVehicle(fleetId, vehiclePlateNumber, lat, lng, alt);
+            const location = new Location(lat, lng, alt);
+            repository.localizeVehicle(fleetId, vehiclePlateNumber, location);
         } catch (error) {
             console.log(error.message);
         }

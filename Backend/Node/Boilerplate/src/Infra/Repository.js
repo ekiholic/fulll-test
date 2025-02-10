@@ -31,41 +31,40 @@ function isVehicleRegistered(fleetId, vehiclePlateNumber) {
 }
 
 // Verify that the vehicle isn't localized to the same location
-function isSameLocation(vehiclePlateNumber, lat, lng, alt) {
+function isSameLocation(vehiclePlateNumber, location) {
     const res = db.prepare(`SELECT * FROM vehicles WHERE plateNumber = ?`).get(vehiclePlateNumber);
-    return res.lat == lat && res.lng == lng && res.alt == alt;
+    return res.lat == location.lat && res.lng == location.lng && res.alt == location.alt;
 }
 
 // Create fleet with userId
-function createFleet(userId) {
-    const fleetId = `${userId}-fleet`;
-    if (isFleetExist(fleetId)) {
-        throw new Error(`Fleet already created : ${fleetId}`);
+function createFleet(fleet) {
+    if (isFleetExist(fleet.id)) {
+        throw new Error(`Fleet already created : ${fleet.id}`);
     }
-    db.prepare(`INSERT INTO fleets (id, userId) VALUES (?, ?)`).run(fleetId, userId);
-    console.log(`Fleet successfully created: ${fleetId}`);
+    db.prepare(`INSERT INTO fleets (id, userId) VALUES (?, ?)`).run(fleet.id, fleet.userId);
+    console.log(`Fleet successfully created: ${fleet.id}`);
 }
 
 // Register vehicle to a fleet
-function registerVehicle(fleetId, vehiclePlateNumber) {
+function registerVehicle(fleetId, vehicle) {
     if (!isFleetExist(fleetId)) {
-        throw new Error(`${fleetId} doesn't exist`)
-    } else if (isVehicleRegistered(fleetId, vehiclePlateNumber)) {
-        throw new Error(`Vehicle ${vehiclePlateNumber} already registered`);
+        throw new Error(`${fleetId} doesn't exist`);
+    } else if (isVehicleRegistered(fleetId, vehicle.plateNumber)) {
+        throw new Error(`Vehicle ${vehicle.plateNumber} already registered`);
     }
-    db.prepare(`INSERT INTO vehicles (plateNumber, fleetId) VALUES (?, ?)`).run(vehiclePlateNumber, fleetId);
-    console.log(`Vehicle ${vehiclePlateNumber} registered successfully`);
+    db.prepare(`INSERT INTO vehicles (plateNumber, fleetId) VALUES (?, ?)`).run(vehicle.plateNumber, fleetId);
+    console.log(`Vehicle ${vehicle.plateNumber} registered successfully`);
 }
 
 // Set the location of the given vehicle
-function localizeVehicle(fleetId, vehiclePlateNumber, lat, lng, alt) {
+function localizeVehicle(fleetId, vehiclePlateNumber, location) {
     if (!isVehicleRegistered(fleetId, vehiclePlateNumber)) {
         throw new Error(`Vehicle ${vehiclePlateNumber} isn't registered in ${fleetId}`);
-    } else if (isSameLocation(vehiclePlateNumber, lat, lng, alt)) {
+    } else if (isSameLocation(vehiclePlateNumber, location)) {
         throw new Error(`Vehicle ${vehiclePlateNumber} already parked at this location`);
     }
-    db.prepare(`UPDATE vehicles SET lat = ?, lng = ?, alt = ? WHERE plateNumber = ?`).run(lat, lng, alt, vehiclePlateNumber);
-    console.log(`Vehicle ${vehiclePlateNumber} parked successfully`)
+    db.prepare(`UPDATE vehicles SET lat = ?, lng = ?, alt = ? WHERE plateNumber = ?`).run(location.lat, location.lng, location.alt, vehiclePlateNumber);
+    console.log(`Vehicle ${vehiclePlateNumber} parked successfully`);
 }
 
 module.exports =  { createFleet, registerVehicle, localizeVehicle };

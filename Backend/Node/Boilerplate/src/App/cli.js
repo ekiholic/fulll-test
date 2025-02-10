@@ -20,7 +20,7 @@ app
 
 app
     .command("register-vehicle <fleetId> <vehiclePlateNumber>")
-    .description("Create a fleet for a user")
+    .description("Register a vehicle in a fleet")
     .action((fleetId, vehiclePlateNumber) => {
         try {
             const vehicle = new Vehicle(vehiclePlateNumber);
@@ -32,7 +32,7 @@ app
 
 app
     .command("localize-vehicle <fleetId> <vehiclePlateNumber> <lat> <lng> [alt]")
-    .description("Create a fleet for a user")
+    .description("Localize a vehicle to a location")
     .action((fleetId, vehiclePlateNumber, lat, lng, alt) => {
         alt = alt || 0;
         try {

@@ -17,7 +17,7 @@ When('I register this vehicle into my fleet', function () {
         this.fleet.registerVehicle(this.vehicle);
         this.result = "Vehicle registered";
     } catch (error) {
-        this.result = "Vehicle already registered";
+        this.result = error.messag;
     }
 });
 
@@ -34,12 +34,12 @@ When('I try to register this vehicle into my fleet', function () {
         this.fleet.registerVehicle(this.vehicle);
         this.result = "Vehicle registered";
     } catch (error) {
-        this.result = "Vehicle already registered";
+        this.result = error.message;
     }
 });
 
 Then('I should be informed this this vehicle has already been registered into my fleet', function () {
-    assert.strictEqual(this.result, "Vehicle already registered");
+    assert.strictEqual(this.result, "Vehicle is already registered");
 });
 
 Given('the fleet of another user', function () {
@@ -59,7 +59,7 @@ When('I park my vehicle at this location', function () {
         this.fleet.parkVehicle(this.vehicle.plateNumber, this.location);
         this.result = "Vehicle parked";
     } catch (error) {
-        this.result = "Vehicle already parked at this location";
+        this.result = error.message;
     }
 });
 
@@ -77,7 +77,7 @@ When('I try to park my vehicle at this location', function () {
         this.fleet.parkVehicle(this.vehicle.plateNumber, this.location);
         this.result = "Vehicle parked";
     } catch (error) {
-        this.result = "Vehicle already parked at this location";
+        this.result = error.message;
     }
 });
 

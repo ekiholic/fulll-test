@@ -16,6 +16,9 @@ class Fleet {
     }
 
     registerVehicle(vehicle) {
+        if (!(vehicle instanceof Vehicle)) {
+            throw new Error("Expected an instance of Vehicle");
+        }
         if (this.isVehicleRegistered(vehicle.plateNumber)) {
             throw new Error('Vehicle is already registered');
         }

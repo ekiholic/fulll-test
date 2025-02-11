@@ -9,7 +9,10 @@ class Location {
     }
 
     isSameLocation(location) {
-         return this.location.lat === location.lat && this.location.lng === location.lng && this.location.lat === location.lat;
+        if (!(location instanceof Location)) {
+            throw new Error("Expected an instance of Location");
+        }
+        return this.location.lat === location.lat && this.location.lng === location.lng && this.location.lat === location.lat;
     }
 }
 

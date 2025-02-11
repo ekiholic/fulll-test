@@ -5,7 +5,7 @@ const Vehicle = require("../../src/Domain/Vehicle");
 const Location = require("../../src/Domain/Location");
 
 Given('my fleet', function () {
-    this.fleet = new Fleet();
+    this.fleet = new Fleet("user1");
 });
 
 Given('a vehicle', function () {
@@ -43,7 +43,7 @@ Then('I should be informed this this vehicle has already been registered into my
 });
 
 Given('the fleet of another user', function () {
-    this.otherFleet = new Fleet();
+    this.otherFleet = new Fleet("user2");
 })
 
 Given("this vehicle has been registered into the other user's fleet", function () {

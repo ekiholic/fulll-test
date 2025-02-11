@@ -4,7 +4,7 @@ const Fleet = require('../Domain/Fleet');
 const Vehicle = require('../Domain/Vehicle');
 const Location = require('../Domain/Location');
 
-app = new Command()
+const app = new Command()
 
 app
     .command("create <userId>")

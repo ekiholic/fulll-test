@@ -1,5 +1,4 @@
 const Vehicle = require('./Vehicle');
-const Location = require('./Location');
 
 class Fleet {
     constructor(userId) {

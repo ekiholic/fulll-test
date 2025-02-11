@@ -30,12 +30,6 @@ class Fleet {
         }
         vehicle.setLocation(location);
     }
-
-    getVehicleLocation(plateNumber) {
-        if (!this.isVehicleRegistered(plateNumber)) {
-            throw new Error('Vehicle is not registered');
-        }
-    }
 }
 
 module.exports = Fleet;

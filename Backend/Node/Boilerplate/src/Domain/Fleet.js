@@ -3,6 +3,9 @@ const Location = require('./Location');
 
 class Fleet {
     constructor(userId) {
+        if (userId === "" || typeof userId !== "string") {
+            throw new Error("userId invalid")
+        }
         this.userId = userId;
         this.vehicles = new Map();
         this.id = `${userId}-fleet`;

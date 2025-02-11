@@ -13,10 +13,16 @@ function checkRules(rules) {
 
 // Prints number from 1 to n with rules.
 function fizzbuzz(n, rules) {
-    if (typeof n !== "number" || !checkRules(rules)) {
+    if (Number.isNaN(Number(n)) || !checkRules(rules)) {
         console.error("Invalid type");
-        return;
+        process.exit(1);
     }
+
+    if (n <= 0) {
+        console.error("Number must be higher than 1");
+        process.exit(1);
+    }
+
     for (let i = 1; i <= n; i++) {
         let output = "";
         for (const [divisor, word] of Object.entries(rules)) {
@@ -27,3 +33,11 @@ function fizzbuzz(n, rules) {
         console.log(output || i);
     }
 }
+
+// FizzBuzz rules { [divisor]: [word] }
+const rules = {
+    3: "Fizz",
+    5: "Buzz",
+}
+
+fizzbuzz(process.argv[2], rules);

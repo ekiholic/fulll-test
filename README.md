@@ -44,7 +44,7 @@ npm test
 
 To use the App:
 ```shell
-chrmod +x fleet
+chmod +x fleet
 ./fleet create <userId>
 ./fleet register-vehicle <fleetId> <vehiclePlateNumber>
 ./fleet localize-vehicle <fleetId> <vehiclePlateNumber> lat lng [alt]

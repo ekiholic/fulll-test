@@ -1,8 +1,8 @@
 const assert = require('assert');
 const { Given, When, Then } = require('@cucumber/cucumber');
-const Fleet = require("../../src/Domain/Fleet");
-const Vehicle = require("../../src/Domain/Vehicle");
-const Location = require("../../src/Domain/Location");
+const { Fleet } = require('../../dist/Domain/Fleet');
+const { Vehicle } = require('../../dist/Domain/Vehicle');
+const { Location } = require('../../dist/Domain/Location');
 
 Given('my fleet', function () {
     this.fleet = new Fleet("user1");

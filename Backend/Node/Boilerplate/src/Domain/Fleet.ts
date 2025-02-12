@@ -1,8 +1,13 @@
-const Vehicle = require('./Vehicle');
+import { Vehicle } from './Vehicle'
+import { Location } from './Location'
 
 class Fleet {
-    constructor(userId) {
-        if (userId === "" || typeof userId !== "string") {
+    userId: string;
+    vehicles: Map<string, Vehicle>;
+    id: string;
+
+    constructor(userId: string) {
+        if (userId === "") {
             throw new Error("userId invalid")
         }
         this.userId = userId;
@@ -10,26 +15,23 @@ class Fleet {
         this.id = `${userId}-fleet`;
     }
 
-    isVehicleRegistered(plateNumber) {
+    isVehicleRegistered(plateNumber: string): boolean {
         return this.vehicles.has(plateNumber);
     }
 
-    registerVehicle(vehicle) {
-        if (!(vehicle instanceof Vehicle)) {
-            throw new Error("Expected an instance of Vehicle");
-        }
+    registerVehicle(vehicle: Vehicle): void {
         if (this.isVehicleRegistered(vehicle.plateNumber)) {
             throw new Error('Vehicle is already registered');
         }
         this.vehicles.set(vehicle.plateNumber, vehicle);
     }
 
-    parkVehicle(plateNumber, location) {
+    parkVehicle(plateNumber: string, location: Location): void {
         if (!this.isVehicleRegistered(plateNumber)) {
             throw new Error('Vehicle is not registered');
         }
 
-        const vehicle = this.vehicles.get(plateNumber);
+        const vehicle: Vehicle = this.vehicles.get(plateNumber)!;
         if (vehicle.location && vehicle.location.isSameLocation(location)) {
             throw new Error('Vehicle already parked at this location');
         }
@@ -37,4 +39,4 @@ class Fleet {
     }
 }
 
-module.exports = Fleet;
+export { Fleet };

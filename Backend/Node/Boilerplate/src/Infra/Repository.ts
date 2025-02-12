@@ -1,7 +1,11 @@
 const Database = require('better-sqlite3');
+import { Fleet } from '../Domain/Fleet';
+import { Location } from '../Domain/Location';
+import { Vehicle } from '../Domain/Vehicle';
 
 const db = new Database('sqlite3.db');
 
+// Initialize tables
 db.exec(`
     CREATE TABLE IF NOT EXISTS fleets (
       id TEXT PRIMARY KEY,
@@ -19,25 +23,25 @@ db.exec(`
   `);
 
 // Verify that the fleet doesn't already exists
-function isFleetExist(fleetId) {
+function isFleetExist(fleetId: string): boolean {
     const res = db.prepare(`SELECT * FROM fleets WHERE id = ?`).get(fleetId);
     return res;
 }
 
 // Verify that the vehicle isn't already registered
-function isVehicleRegistered(fleetId, vehiclePlateNumber) {
+function isVehicleRegistered(fleetId: string, vehiclePlateNumber: string): boolean {
     const res = db.prepare(`SELECT * FROM vehicles WHERE plateNumber = ? and fleetId = ?`).get(vehiclePlateNumber, fleetId);
     return res;
 }
 
 // Verify that the vehicle isn't localized to the same location
-function isSameLocation(vehiclePlateNumber, location) {
+function isSameLocation(vehiclePlateNumber: string, location: Location): boolean {
     const res = db.prepare(`SELECT * FROM vehicles WHERE plateNumber = ?`).get(vehiclePlateNumber);
     return res.lat == location.lat && res.lng == location.lng && res.alt == location.alt;
 }
 
 // Create fleet with userId
-function createFleet(fleet) {
+function createFleet(fleet: Fleet): void {
     if (isFleetExist(fleet.id)) {
         throw new Error(`Fleet already created : ${fleet.id}`);
     }
@@ -46,7 +50,7 @@ function createFleet(fleet) {
 }
 
 // Register vehicle to a fleet
-function registerVehicle(fleetId, vehicle) {
+function registerVehicle(fleetId: string, vehicle: Vehicle): void {
     if (!isFleetExist(fleetId)) {
         throw new Error(`${fleetId} doesn't exist`);
     } else if (isVehicleRegistered(fleetId, vehicle.plateNumber)) {
@@ -57,7 +61,7 @@ function registerVehicle(fleetId, vehicle) {
 }
 
 // Set the location of the given vehicle
-function localizeVehicle(fleetId, vehiclePlateNumber, location) {
+function localizeVehicle(fleetId: string, vehiclePlateNumber: string, location: Location): void {
     if (!isVehicleRegistered(fleetId, vehiclePlateNumber)) {
         throw new Error(`Vehicle ${vehiclePlateNumber} isn't registered in ${fleetId}`);
     } else if (isSameLocation(vehiclePlateNumber, location)) {
@@ -67,4 +71,4 @@ function localizeVehicle(fleetId, vehiclePlateNumber, location) {
     console.log(`Vehicle ${vehiclePlateNumber} parked successfully`);
 }
 
-module.exports =  { createFleet, registerVehicle, localizeVehicle };
+export { createFleet, registerVehicle, localizeVehicle };

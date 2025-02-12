@@ -34,7 +34,7 @@ When('I try to register this vehicle into my fleet', function () {
         this.fleet.registerVehicle(this.vehicle);
         this.result = "Vehicle registered";
     } catch (error) {
-        this.result = error.messagee;
+        this.result = error.message;
     }
 });
 
@@ -59,7 +59,7 @@ When('I park my vehicle at this location', function () {
         this.fleet.parkVehicle(this.vehicle.plateNumber, this.location);
         this.result = "Vehicle parked";
     } catch (error) {
-        this.result = error.messagee;
+        this.result = error.message;
     }
 });
 
@@ -77,7 +77,7 @@ When('I try to park my vehicle at this location', function () {
         this.fleet.parkVehicle(this.vehicle.plateNumber, this.location);
         this.result = "Vehicle parked";
     } catch (error) {
-        this.result = error.messagee;
+        this.result = error.message;
     }
 });
 

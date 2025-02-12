@@ -6,8 +6,7 @@ function fizzbuzz(n: number, rules: Rules): void {
     if (!n || isNaN(n)) {
         console.error("Please enter valid number");
         process.exit(1);
-    }
-    if (n <= 0) {
+    } else if (n <= 0) {
         console.error("Number must be higher than 1");
         process.exit(1);
     }

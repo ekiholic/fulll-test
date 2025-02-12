@@ -1,8 +1,8 @@
 ## Fulll's test
 This project includes two main components: **Algorithm** and **Backend/Node**.
 
-### [Algo] FizzBuzz
-The FizzBuzz algorithm follows basic rules for displaying numbers based:
+## [Algo] FizzBuzz
+The FizzBuzz algorithm follows basic rules for displaying numbers:
 - if number can be divided by 3: display **Fizz** ;
 - if number can be divided by 5: display **Buzz** ;
 - if number can be divided by 3 **AND** 5 : display **FizzBuzz** ;
@@ -44,7 +44,7 @@ npm test
 
 To use the App:
 ```shell
-chrmod +x fleet
+chmod +x fleet
 ./fleet create <userId>
 ./fleet register-vehicle <fleetId> <vehiclePlateNumber>
 ./fleet localize-vehicle <fleetId> <vehiclePlateNumber> lat lng [alt]

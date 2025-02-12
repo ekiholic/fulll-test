@@ -1,4 +1,4 @@
-const Database = require('better-sqlite3');
+import Database from 'better-sqlite3';
 import { Fleet } from '../Domain/Fleet';
 import { Location } from '../Domain/Location';
 import { Vehicle } from '../Domain/Vehicle';
@@ -25,19 +25,19 @@ db.exec(`
 // Verify that the fleet doesn't already exists
 function isFleetExist(fleetId: string): boolean {
     const res = db.prepare(`SELECT * FROM fleets WHERE id = ?`).get(fleetId);
-    return res;
+    return !!res;
 }
 
 // Verify that the vehicle isn't already registered
 function isVehicleRegistered(fleetId: string, vehiclePlateNumber: string): boolean {
     const res = db.prepare(`SELECT * FROM vehicles WHERE plateNumber = ? and fleetId = ?`).get(vehiclePlateNumber, fleetId);
-    return res;
+    return !!res;
 }
 
 // Verify that the vehicle isn't localized to the same location
 function isSameLocation(vehiclePlateNumber: string, location: Location): boolean {
-    const res = db.prepare(`SELECT * FROM vehicles WHERE plateNumber = ?`).get(vehiclePlateNumber);
-    return res.lat == location.lat && res.lng == location.lng && res.alt == location.alt;
+    const res = db.prepare(`SELECT * FROM vehicles WHERE plateNumber = ?`).get(vehiclePlateNumber) as { lat: number; lng: number; alt: number } | undefined;
+    return res !== undefined && res.lat == location.lat && res.lng == location.lng && res.alt == location.alt;
 }
 
 // Create fleet with userId

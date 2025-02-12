@@ -1,4 +1,4 @@
-const { Command } = require('commander');
+import { Command } from 'commander';
 import * as repository from '../Infra/Repository';
 import { Fleet } from '../Domain/Fleet';
 import { Vehicle } from '../Domain/Vehicle';
@@ -13,8 +13,12 @@ app
         try {
             const fleet = new Fleet(userId);
             repository.createFleet(fleet);
-        } catch (error: any) {
-            console.log(error.message);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.error(error.message);
+            } else {
+                console.error('Unknown error occured');
+            }
         }
     });
 
@@ -25,8 +29,12 @@ app
         try {
             const vehicle = new Vehicle(vehiclePlateNumber);
             repository.registerVehicle(fleetId, vehicle);
-        } catch (error: any) {
-            console.log(error.message);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.error(error.message);
+            } else {
+                console.error('Unknown error occured');
+            }
         }
     });
 
@@ -38,8 +46,12 @@ app
         try {
             const location = new Location(lat, lng, alt);
             repository.localizeVehicle(fleetId, vehiclePlateNumber, location);
-        } catch (error: any) {
-            console.log(error.message);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.error(error.message);
+            } else {
+                console.error('Unknown error occured');
+            }
         }
     });
 

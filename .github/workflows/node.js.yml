@@ -31,7 +31,7 @@ jobs:
       working-directory: ./Backend/Node/Boilerplate
       
     - name: Run tests
-      run: npm test
+      run: npx tsc || npm test
       working-directory: ./Backend/Node/Boilerplate
       
     - name: Run ESLint

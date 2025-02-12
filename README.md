@@ -1,7 +1,7 @@
 ## Fulll's test
 This project includes two main components: **Algorithm** and **Backend/Node**.
 
-### [Algo] FizzBuzz
+## [Algo] FizzBuzz
 The FizzBuzz algorithm follows basic rules for displaying numbers:
 - if number can be divided by 3: display **Fizz** ;
 - if number can be divided by 5: display **Buzz** ;
